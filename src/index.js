@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import faker from 'faker';
 import CommentDetail from './CommentDetail' //The ./ means it is in the same directory path as index.js. so ./ tells it to look in the same folder that we are in and then look for thhe file name there.
+import ApprovalCard from './ApprovalCard';
 
 //=============================================================
 // Below I will remove all three of the comment divs inside of the "ui container comments" div and replace it with the component. All text is located at the bottom in a comment.
@@ -19,35 +20,43 @@ import CommentDetail from './CommentDetail' //The ./ means it is in the same dir
 // <TheNameOfTheComponent name of the prop = "value of the prop"  />
 // So the first step is the word author, and then we need to provide a way for the child to get access to the prop that we have provided to the component. We go to the CommentDetail file, and the prop is going to show up inside of an object that is provided as the first argument to the function (the "CommentDetail" function). And that first argument will just be called "props" but no quotes around it. 
 
- 
+//We want to put the CommentDetail inside of the approval card, so instead of using the self-closing tag of <Approval Card />, we will do an opening tag before <CommentDetail/> and a closing tag after it. This will communicate that We are taking the CommentDetail component and passing it as a prop down into ApprovalCard. By doing this, we can make ApprovalCard reuseable. CommentDetail is a child of ApprovalCard, which is a child of the parent (App). Remember to reference {props.children} on the ApprovalCard.
 
 const App = ()=> {
   return (
     <div className = "ui container comments">
-        <CommentDetail 
-            author= "Sam" 
-            timeAgo= "Today at 10:00 am" 
-            comment= "Cool photos!"
-            avatar = {faker.image.avatar()}
-        />
-        <CommentDetail 
-            author = "Larry" 
-            timeAgo= "Today at 11:40 am"         
-            comment= "You spilled Metalica wrong"
-            avatar = {faker.image.avatar()}
-        />
-        <CommentDetail 
-            author = "James" 
-            timeAgo= "Today at 4:34 pm" 
-            comment= "I wish I could have gone to the concert." 
-            avatar = {faker.image.avatar()}
-        />
-        <CommentDetail 
-            author = "Keanu Reeves" 
-            timeAgo= "Today at 7:40 pm" 
-            comment= "I love Metallica, but I love YOU more!!!"
-            avatar = {faker.image.avatar()}
-        />
+        <ApprovalCard>
+            <div>
+                <h4>Warning!</h4>
+                Are you sure you want to do this?
+            </div>
+            </ApprovalCard>
+        <ApprovalCard>
+            <CommentDetail 
+                author= "Sam" 
+                timeAgo= "Today at 10:00 am" 
+                comment= "Cool photos!"
+                avatar = {faker.image.avatar()}
+            />
+        </ApprovalCard>
+
+        <ApprovalCard>
+            <CommentDetail 
+                author = "Larry" 
+                timeAgo= "Today at 11:40 am"         
+                comment= "You spilled Metalica wrong"
+                avatar = {faker.image.avatar()}
+            />
+        </ApprovalCard>
+
+        <ApprovalCard>   
+            <CommentDetail 
+                author = "Keanu Reeves" 
+                timeAgo= "Today at 7:40 pm" 
+                comment= "I love you!"
+                avatar = {faker.image.avatar()}
+            />
+        </ApprovalCard>  
         </div>
       )
 };
